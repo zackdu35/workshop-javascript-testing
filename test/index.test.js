@@ -29,4 +29,11 @@ describe('summarizeBasket', function() {
     expect(result.countProducts).to.be.equal(1);
   });
 
+  it('Basket with 2 different products should return basic sum of prices', function() {
+    var result = summarizeBasket(prices, ['potato', 'apple']);
+    expect(result.price).to.be.equal(8);
+    expect(result.countArticles).to.be.equal(2);
+    expect(result.countProducts).to.be.equal(2);
+  });
+
 });
