@@ -22,4 +22,11 @@ describe('summarizeBasket', function() {
     expect(result.countProducts).to.be.equal(0);
   });
 
+  it('Basket witn only one product should return price of the product', function() {
+    var result = summarizeBasket(prices, ['cucumber']);
+    expect(result.price).to.be.equal(4);
+    expect(result.countArticles).to.be.equal(1);
+    expect(result.countProducts).to.be.equal(1);
+  });
+
 });
