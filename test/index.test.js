@@ -1,38 +1,25 @@
-var assert = require('chai').assert;
 var expect = require('chai').expect;
-var should = require('chai').should();
 
-var animals = require ('../index').animals;
+var summarizeBasket = require ('../index').summarizeBasket;
 
-describe('Hello world testing !', function() {
-  it('should be true', function() {
-    expect(true).to.be.true;
-  })
-});
+let prices = {
+  banana: 1,
+  potato: 2,
+  tomato: 3,
+  cucumber: 4,
+  salad: 5,
+  apple: 6
+};
 
-describe('Animals list', function() {
-  it('should include Grumpy', function() {
-    var famousNames = animals.map(animal => animal.name);
-    expect(famousNames).to.include('Grumpy');
-  })
-});
+let products = [ 'tomato', 'cucumber', 'tomato', 'salad', 'potato', 'cucumber', 'potato', 'potato', 'tomato', 'potato' ];
 
-describe('same test with Assert / Expect / Should', function() {
+describe('summarizeBasket', function() {
 
-  describe('GIVEN a list of 4 colours: white, blue, green, red', function() {
-    var colours = ['white', 'blue', 'green', 'red'];
-    // Assert
-    it('WHEN the client request the list THEN 4 items are returned', function() {
-      assert.lengthOf(colours, 4);
-    })
-    // Expect
-    it('WHEN the client request the list THEN 4 items are returned', function() {
-      expect(colours).to.have.lengthOf(4);
-    })
-    // Should
-    it('WHEN the client request the list THEN 4 items are returned', function() {
-      colours.should.have.lengthOf(4);
-    })
-
+  it('Empty basket should return 0 for each value', function() {
+    var result = summarizeBasket({}, []);
+    expect(result.price).to.be.equal(0);
+    expect(result.countArticles).to.be.equal(0);
+    expect(result.countProducts).to.be.equal(0);
   });
+
 });
