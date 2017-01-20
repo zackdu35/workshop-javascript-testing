@@ -1,4 +1,21 @@
 
+let splitIdentik = (array) => {
+  let newArray = [];
+  let checker = {};
+  for (let i = 0; i < array.length; i++) {
+    let item = array[i];
+    if(!checker.hasOwnProperty(item)) {
+      checker[item] = newArray.length;
+      newArray.push([item]);
+    } else {
+      newArray[checker[item]].push(item);
+    }
+  }
+
+  return newArray;
+}
+
+
 let getUnique = (array) => {
   let newArray = [];
   let checker = {};
@@ -17,10 +34,17 @@ let summarizeBasket = (prices, products) => {
 
   let price = 0;
 
-  for (let i = 0; i < products.length; i++) {
-    let product = products[i];
-    price += prices[product];
+  let splittedProducts = splitIdentik(products)
+
+  for (let j = 0; j < splittedProducts.length; j++) {
+    let sameProducts = splittedProducts[j];
+
+    let toSubstract = Math.floor(sameProducts.length / 3);
+    let product = sameProducts[0];
+    let priceSameProduct = (sameProducts.length - toSubstract) * prices[product]
+    price += priceSameProduct;
   }
+
 
   return {
     price: price,
@@ -31,5 +55,6 @@ let summarizeBasket = (prices, products) => {
 
 module.exports = {
   summarizeBasket: summarizeBasket,
-  getUnique: getUnique
+  getUnique: getUnique,
+  splitIdentik: splitIdentik
 };

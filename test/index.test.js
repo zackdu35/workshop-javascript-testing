@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 
 var summarizeBasket = require ('../index').summarizeBasket;
 var getUnique = require ('../index').getUnique;
+var splitIdentik = require ('../index').splitIdentik;
 
 let prices = {
   banana: 1,
@@ -51,6 +52,22 @@ describe('summarizeBasket', function() {
     expect(result.countProducts).to.be.equal(5);
   });
 
+  it('Basket with 3 same product should sum of 2 prices of this product', function() {
+    var result = summarizeBasket(prices, ['apple', 'apple', 'apple']);
+    expect(result.price).to.be.equal(12);
+    expect(result.countArticles).to.be.equal(3);
+    expect(result.countProducts).to.be.equal(1);
+  });
+
+  it('SPEC TEST !!!', function() {
+    var result = summarizeBasket(prices, [ 'tomato', 'cucumber', 'tomato', 'salad', 'potato', 'cucumber', 'potato', 'potato', 'tomato', 'potato' ]);
+    expect(result.price).to.be.equal(25);
+    expect(result.countArticles).to.be.equal(10);
+    expect(result.countProducts).to.be.equal(4);
+  });
+
+
+
 });
 
 describe('function to return array with distinct values', function() {
@@ -73,6 +90,30 @@ describe('function to return array with distinct values', function() {
   it('Array with 3 items with 2 same values should return array with 2 different values', function() {
     var result = getUnique(['tata', 'tete', 'tata']);
     expect(result).to.be.eql(['tata', 'tete']);
+  });
+
+});
+
+describe('function to return array with arrays of same values', function() {
+
+  it('Empty array should return empty array', function() {
+    var result = splitIdentik([]);
+    expect(result).to.be.empty;
+  });
+
+  it('Array with one value should return array with same value', function() {
+    var result = splitIdentik(['tutu']);
+    expect(result).to.be.eql([['tutu']]);
+  });
+
+  it('Array with 2 differents values should return array with 2 arrays inside', function() {
+    var result = splitIdentik(['titi', 'toto']);
+    expect(result).to.be.eql([['titi'], ['toto']]);
+  });
+
+  it('Array with 3 items with 2 same values should return array with 2 arrays inside', function() {
+    var result = splitIdentik(['tata', 'tete', 'tata']);
+    expect(result).to.be.eql([['tata', 'tata'], ['tete']]);
   });
 
 });
