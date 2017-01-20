@@ -1,14 +1,60 @@
-var animals = [
-  { name: 'Grumpy', age: 3, male: true, ofTheSea: false },
-  { name: 'Droopy', age: 7, male: true, ofTheSea: false },
-  { name: 'Nemo', age: 4, male: true, ofTheSea: true },
-  { name: 'Renée', age: 6, male: false, ofTheSea: false },
-  { name: 'Babe', age: 3, male: false, ofTheSea: false },
-  { name: 'Flipper', age: 8, male: true, ofTheSea: true },
-  { name: 'Lassie', age: 5, male: false, ofTheSea: false },
-  { name: 'Polochon', age: 5, male: true, ofTheSea: true }
-];
+
+let splitIdentik = (array) => {
+  let newArray = [];
+  let checker = {};
+  for (let i = 0; i < array.length; i++) {
+    let item = array[i];
+    if(!checker.hasOwnProperty(item)) {
+      checker[item] = newArray.length;
+      newArray.push([item]);
+    } else {
+      newArray[checker[item]].push(item);
+    }
+  }
+
+  return newArray;
+}
+
+
+let getUnique = (array) => {
+  let newArray = [];
+  let checker = {};
+  for (let i = 0; i < array.length; i++) {
+    let item = array[i];
+    if(!checker[item]) {
+      checker[item] = true;
+      newArray.push(item);
+    }
+  }
+
+  return newArray;
+}
+
+let summarizeBasket = (prices, products) => {
+
+  let price = 0;
+
+  let splittedProducts = splitIdentik(products)
+
+  for (let j = 0; j < splittedProducts.length; j++) {
+    let sameProducts = splittedProducts[j];
+
+    let toSubstract = Math.floor(sameProducts.length / 3);
+    let product = sameProducts[0];
+    let priceSameProduct = (sameProducts.length - toSubstract) * prices[product]
+    price += priceSameProduct;
+  }
+
+
+  return {
+    price: price,
+    countArticles: products.length,
+    countProducts: getUnique(products).length
+  }
+}
 
 module.exports = {
-  animals: animals
+  summarizeBasket: summarizeBasket,
+  getUnique: getUnique,
+  splitIdentik: splitIdentik
 };
