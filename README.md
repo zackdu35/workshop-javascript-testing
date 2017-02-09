@@ -10,3 +10,4 @@ Workshop given with Ynov's students
 
 	npm test
 
+https://github.com/zackdu35/workshop-javascript-testing
